@@ -22,6 +22,7 @@ export default function StoreBox({store, setStore}: StoreBoxProps) {
     return(
         <div className="fixed transition ease-in-out delay-150 inset-x-0 mx-auto bottom-20 rounded-lg shadow-lg max-w-sm z-10 w-full bg-white">
             <div className="p-5">
+
                 <div className="flex justify-between items-start">  
                     <div className="flex gap-4 items-center">
                         <Image 
@@ -35,6 +36,7 @@ export default function StoreBox({store, setStore}: StoreBoxProps) {
                             <div className="text-sm text-gray-500">{store?.state}</div>
                         </div>
                     </div>
+                   
                     <button type="button" onClick={() => setStore(null)}>
                         <AiOutlineClose/> 
                     </button>

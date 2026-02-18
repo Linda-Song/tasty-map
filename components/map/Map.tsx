@@ -14,9 +14,8 @@ const DEFAULT_LAT = -33.8708464;
 const DEFAULT_LNG = 151.20733;
 
 interface MapProps {
-  setMap:Dispatch<SetStateAction<google.maps.Map | null>>;
+  setMap: Dispatch <SetStateAction<google.maps.Map | null>>;
 }
-
 
 export default function GoogleMap({setMap} : MapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
@@ -27,10 +26,8 @@ export default function GoogleMap({setMap} : MapProps) {
         center: { lat: DEFAULT_LAT, lng: DEFAULT_LNG }, 
         zoom: 15,
         mapId: "DEMO_MAP_ID",
-       
       });
       setMap(map);
-
     }
   };
 

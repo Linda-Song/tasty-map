@@ -3,20 +3,20 @@ import { useEffect, Dispatch, SetStateAction } from "react";
 
 interface MarkerProps {
   map: google.maps.Map | null;
-  storeDatas: StoreType[];
+  stores: StoreType[];
   setCurrentStore: (store: StoreType | null) => void;
 }
 
 const MENU_CATEGORIES = ['croissant','cake','donut','sourdough','macaron','muffin','lamington','pie','tart']
 
-export default function Markers({map, storeDatas, setCurrentStore}: MarkerProps) {
+export default function Markers({map, stores, setCurrentStore}: MarkerProps) {
 
   useEffect(()=> {
-    if(!map || !storeDatas || !window.google) return;
+    if(!map || !stores || !window.google) return;
     
     const { AdvancedMarkerElement } = window.google.maps.marker;
 
-    const markers = storeDatas.map((store) => {     
+    const markers = stores.map((store) => {     
       const storeImage = store.category && MENU_CATEGORIES.includes(store.category);
       const imageSrc = storeImage
         ? `/images/markers/${store.category}.png`
@@ -63,7 +63,7 @@ export default function Markers({map, storeDatas, setCurrentStore}: MarkerProps)
           marker.map = null;
         });
       };
-    }, [map, storeDatas, setCurrentStore]);
+    }, [map, stores, setCurrentStore]);
 
     return null;  
   }

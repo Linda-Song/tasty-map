@@ -1,24 +1,16 @@
-'use client'
-import Markers from "@/components/markers/Markers";
-import GoogleMap from "../components/map/Map";
-import stores from "@/data/store_data.json";
-import { useState } from "react";
-import { StoreType } from "@/type/index";
-import StoreBox from "@/components/store/StoreBox";
+import HomeClient from "@/components/home/HomeClient";
+import { StoreType } from "@/type";
 
-export default function Home() {
-  const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [currentStore, setCurrentStore] = useState<StoreType | null>(null);
-  const storeDatas = stores["DATA"] as StoreType[];
+export default async function Home(){
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/stores`, {
+    next: {revalidate: 3600 },
+  });
 
-  console.log(currentStore);
-  return (
-    <>
-      <main > 
-        <GoogleMap setMap ={setMap} /> 
-        <Markers storeDatas={storeDatas} map={map} setCurrentStore={setCurrentStore}/>
-        <StoreBox store={currentStore} setStore={setCurrentStore}></StoreBox>
-      </main>
-    </>
-  );
-}   
+  if(!res.ok) {
+    throw new Error('Failed to load data. Please try again later.')
+  }
+
+  const stores: StoreType[] = await res.json();
+
+  return <HomeClient stores={stores}/>;
+}

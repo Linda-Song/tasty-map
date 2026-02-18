@@ -69,8 +69,8 @@ body {
 
   /* 4. 이름표 디자인 */
   .infowindow-content {
-    @apply bg-white px-3 py-1.5 rounded-full shadow-lg border border-gray-200 
-           whitespace-nowrap text-xs font-bold text-gray-800 tracking-tight;
+    @apply bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-300 
+           whitespace-nowrap text-xs font-bold text-black tracking-tight antialiased;
   }
 
   /* 5. 마커 이미지 */
@@ -78,10 +78,6 @@ body {
     @apply w-10 h-10 transition-transform duration-200 drop-shadow-md;
   } */
 
-  /* 6. 호버 시 이미지 확대 */
-  /* .marker-container:hover .marker-image {
-    @apply scale-110;
-  } */
 }
 
 
