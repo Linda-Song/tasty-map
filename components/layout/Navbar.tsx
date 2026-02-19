@@ -1,4 +1,4 @@
- 'use client'
+'use client'
 
 import Link from "next/link";
 import { useState } from "react";
@@ -20,7 +20,7 @@ export default function Navbar () {
 
         {/* mobile version */}
         <div role="button" className="navbar__button" onClick={() => setIsOpen((val) =>!val)}>
-        {isOpen ?// @ts-ignore 
+        {isOpen ?
         <AiOutlineClose/>  : <BiMenu/> }
         </div>
       </div>

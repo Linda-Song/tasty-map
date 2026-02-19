@@ -47,6 +47,40 @@ body {
 .layout {
   @apply pt-[52px]
 }
+/* .infowindow {
+  @apply bg-blue-900 text-white block text-sm text-center h-6 rounded-md px-2 
+} */
+
+@layer components {
+  /* 1. 전체 마커 바구니 */
+  .marker-container {
+    @apply relative flex flex-col items-center cursor-pointer;
+  }
+
+  /* 2. 인포윈도우 (꼬리 없이 본체만) */
+  .custom-infowindow {
+    @apply absolute bottom-11 opacity-0 transition-opacity duration-200 pointer-events-none z-10;
+  }
+
+  /* 3. 호버 시 인포윈도우 보이기 (opacity 사용으로 부드럽게) */
+  .marker-container:hover .custom-infowindow {
+    @apply opacity-100;
+  }
+
+  /* 4. 이름표 디자인 */
+  .infowindow-content {
+    @apply bg-white px-3 py-1.5 rounded-full shadow-sm border border-gray-300 
+           whitespace-nowrap text-xs font-bold text-black tracking-tight antialiased;
+  }
+
+  /* 5. 마커 이미지 */
+  /* .marker-image {
+    @apply w-10 h-10 transition-transform duration-200 drop-shadow-md;
+  } */
+
+}
+
+
 
 @media (width <= 640px) {
   .navbar--mobile {
@@ -67,4 +101,5 @@ body {
   .navbar__list--mobile-item:hover {
     @apply text-gray-200;
   }
+
 }
