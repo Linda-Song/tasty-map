@@ -1,5 +1,6 @@
 import "./globals.css";
 import Navbar from '../components/layout/Navbar';
+import ReactQueryProvider from "@/components/ReactQueryProvider";
 
 export default function RootLayout({children,}: Readonly<{
   children: React.ReactNode;
@@ -8,9 +9,12 @@ export default function RootLayout({children,}: Readonly<{
   return (
     <html lang="en">
       <body className="layout">
-        <Navbar/>
-        {children}
+        <ReactQueryProvider>
+          <Navbar/>
+          {children}
+        </ReactQueryProvider>
       </body>
     </html>
   );
 }
+

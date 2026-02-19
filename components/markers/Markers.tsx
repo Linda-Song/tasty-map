@@ -1,5 +1,5 @@
 import { StoreType } from "@/type/index";
-import { useEffect, Dispatch, SetStateAction } from "react";
+import { useEffect} from "react";
 
 interface MarkerProps {
   map: google.maps.Map | null;
@@ -21,8 +21,11 @@ export default function Markers({map, stores, setCurrentStore}: MarkerProps) {
       const imageSrc = storeImage
         ? `/images/markers/${store.category}.png`
         : "/images/markers/default.png";
-  
-      const markerPosition = { lat: store.x_cnts, lng: store.y_dnts };
+    const markerPosition: google.maps.LatLngLiteral = { 
+    lat: Number(store.x_cnts), 
+    lng: Number(store.y_dnts)  
+  };
+      // const markerPosition = { lat: store.lat, lng: store.lng };
 
       // 1. 마커 컨테이너 생성 
       const container = document.createElement("div");

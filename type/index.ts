@@ -1,12 +1,12 @@
 export interface StoreType {
-  id: number;
-  title: string;
-  state: string;
-  city: string;
-  x_cnts: number; 
-  y_dnts: number; 
-  address: string;
+  id: number | null;
+  title: string | null;
+  state: string | null;
+  city: string | null;
+  x_cnts: number | null; 
+  y_dnts: number | null; 
+  address: string | null;
   tel_no?: string | null; 
-  web?: string;
-  category: string;
+  web?: string | null;
+  category: string| null;
 }

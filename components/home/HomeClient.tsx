@@ -1,9 +1,13 @@
 'use client'
-import Markers from "@/components/markers/Markers";
-import GoogleMap from "../map/Map";
+
 import { useState } from "react";
 import { StoreType } from "@/type/index";
+
 import StoreBox from "@/components/store/StoreBox";
+import Markers from "@/components/markers/Markers";
+import GoogleMap from "../map/Map";
+
+
 
 interface HomeClientProps {
     stores: StoreType[];
