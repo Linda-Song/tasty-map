@@ -4,9 +4,12 @@ import Image from "next/image";
 import { fetchStores } from "../api/store";
 import { useQuery } from "@tanstack/react-query";
 import { StoreType } from "@/type";
+import Loading from "@/components/common/Loading";
+
 
 export default function StoreListPage() {
   // 2. useQuery를 사용하여 데이터 가져오기
+  //data:원하는 이름 으로 데이터 가져올 수 있음
   const { data: stores, isLoading, isError } = useQuery<StoreType[]>({
     queryKey: ["stores"],
     queryFn: fetchStores,
@@ -14,15 +17,16 @@ export default function StoreListPage() {
   if (stores) {
   console.log(stores);
 }
-
   // 3. 로딩 및 에러 상태 처리
-  if (isLoading) return <div className="p-8 text-center">데이터를 불러오는 중입니다...</div>;
   if (isError) return <div className="p-8 text-center text-red-500">에러가 발생했습니다.</div>;
-
+  
   return (
     <div className="px-4 md:max-w-4xl mx-auto py-8">
       <ul role="list" className="divide-y divide-gray-100">
-        {stores?.map((store, index) => (
+        {isLoading
+        ?(<Loading/>)
+        :(
+          stores?.map((store, index) => (
           <li className="flex justify-between gap-x-6 py-5" key={store.id || index}>
             <div className="flex gap-x-4">
               <Image
@@ -33,7 +37,7 @@ export default function StoreListPage() {
                 }
                 width={48}
                 height={48}
-                alt="아이콘 이미지"
+                alt="icon"
                 className="object-contain"
               />
               <div>
@@ -54,8 +58,10 @@ export default function StoreListPage() {
               </div>
             </div>
           </li>
-        ))}
+        )))}
       </ul>
     </div>
   );
 }
+
+
