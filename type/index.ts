@@ -10,3 +10,9 @@ export interface StoreType {
   web?: string | null;
   category: string| null;
 }
+
+export interface StoreResponse{
+  data: StoreType[];
+  totalPages: number;
+  totalCount: number;
+}
