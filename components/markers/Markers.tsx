@@ -20,7 +20,7 @@ export default function Markers({map, stores, setCurrentStore}: MarkerProps) {
       const storeImage = store.category && MENU_CATEGORIES.includes(store.category);
       const imageSrc = storeImage
         ? `/images/markers/${store.category}.png`
-        : "/images/markers/default.png";
+        : "/images/markers/bread.png";
     const markerPosition: google.maps.LatLngLiteral = { 
     lat: Number(store.x_cnts), 
     lng: Number(store.y_dnts)  
