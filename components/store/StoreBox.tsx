@@ -1,9 +1,13 @@
+'use client'
 import { Dispatch, SetStateAction } from "react"
 import Image from "next/image";
 import { StoreType } from "@/type";
 import { AiOutlineClose, AiOutlineInfoCircle } from "react-icons/ai";
 import { HiOutlineMapPin, HiOutlinePhone } from "react-icons/hi2";
 import { GiCroissant } from "react-icons/gi";
+import { useRouter } from 'next/navigation';
+
+
 
 interface StoreBoxProps {
     store: StoreType | null;
@@ -18,6 +22,9 @@ export default function StoreBox({store, setStore}: StoreBoxProps) {
     const imageSrc = storeImage
         ? `/images/markers/${store.category}.png`
         : "/images/markers/default.png";
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const router = useRouter();
 
     return(
         <div className="fixed transition ease-in-out delay-150 inset-x-0 mx-auto bottom-20 rounded-lg shadow-lg max-w-sm z-10 w-full bg-white">
@@ -51,7 +58,7 @@ export default function StoreBox({store, setStore}: StoreBoxProps) {
                     
                     <div className="flex gap-2 items-center text-sm">
                         <HiOutlinePhone className="text-gray-400"/>
-                        {store?.tel_no || "none"}
+                        {store?.phone|| "none"}
                     </div>
 
                     <div className="flex gap-2 items-center text-sm">
@@ -70,7 +77,7 @@ export default function StoreBox({store, setStore}: StoreBoxProps) {
             </div>
             </div>
 
-            <button type="button" onClick={() => window.alert("상세보기 작업중")}
+            <button type="button" onClick={() => router.push(`/stores/${store.id}`)}
                 className="w-full bg-blue-700 hover:bg-blue-600 py-3 text-white rounded-b-lg text-sm font-medium">
                 More info
             </button>

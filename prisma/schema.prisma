@@ -4,25 +4,60 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  
+  // url      = env("DATABASE_URL")
+
 }
 
+// 1. User 모델 확장 (NextAuth 필수 필드 추가)
 model User {
-  id              Int              @id @default(autoincrement())
-  email           String           @unique 
-  name            String   
+  id            Int       @id @default(autoincrement())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
 }
 
+// 2. 소셜 로그인 정보 저장용 (NextAuth 필수)
+model Account {
+  id                 Int     @id @default(autoincrement())
+  userId             Int
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// 3. DB 세션 관리용 (NextAuth 필수)
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// 기존 Store 모델
 model Store {
-  id             Int               @id @default(autoincrement())
-  title          String?
-  phone          String?  
-  state          String?
+  id       Int     @id @default(autoincrement())
+  title    String?
+  phone    String?
+  state    String?
   city     String
-  address        String?
-  lat            String?
-  lng            String?
-  category       String?
-  web             String?            
+  address  String?
+  lat      String?
+  lng      String?
+  category String?
+  web      String?
 }
-

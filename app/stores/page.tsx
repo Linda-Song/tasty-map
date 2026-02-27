@@ -14,9 +14,7 @@ const MENU_CATEGORIES = ['croissant','cake','donut','sourdough','macaron','muffi
 export default function StoreListPage() {
   const searchParams = useSearchParams();
   const page = searchParams.get("page") || "1";
-  const currentPage = Number(page);
-  console.log(page);
-  
+  const currentPage = Number(page);  
   
   // 2. useQuery를 사용하여 데이터 가져오기
   //data:원하는 이름 으로 데이터 가져올 수 있음
@@ -71,7 +69,7 @@ export default function StoreListPage() {
                 {store?.address}
               </div>
               <div className="mt-1 text-xs truncate font-semibold leading-5 text-gray-500">
-                {store?.tel_no || "none"} | {store?.web} 
+                {store?.phone|| "none"} | {store?.web} 
               </div>
             </div>
           </li>
