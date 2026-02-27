@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from "react";
-import { StoreType } from "@/type/index";
+import { StoreType, StoreResponse} from "@/type/index";
 
 import StoreBox from "@/components/store/StoreBox";
 import Markers from "@/components/markers/Markers";
@@ -10,7 +10,7 @@ import GoogleMap from "../map/Map";
 
 
 interface HomeClientProps {
-    stores: StoreType[];
+    stores: StoreResponse ;
 }
 
 export default function HomeClient({stores} : HomeClientProps) {

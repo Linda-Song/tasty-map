@@ -1,9 +1,9 @@
-import { StoreType } from "@/type/index";
+import { StoreResponse, StoreType } from "@/type/index";
 import { useEffect} from "react";
 
 interface MarkerProps {
   map: google.maps.Map | null;
-  stores: StoreType[];
+  stores: StoreResponse;
   setCurrentStore: (store: StoreType | null) => void;
 }
 
@@ -12,18 +12,18 @@ const MENU_CATEGORIES = ['croissant','cake','donut','sourdough','macaron','muffi
 export default function Markers({map, stores, setCurrentStore}: MarkerProps) {
 
   useEffect(()=> {
-    if(!map || !stores || !window.google) return;
+    if(!map || !stores?.data || !window.google) return;
     
     const { AdvancedMarkerElement } = window.google.maps.marker;
 
-    const markers = stores.map((store) => {     
+    const markers = stores.data.map((store) => {     
       const storeImage = store.category && MENU_CATEGORIES.includes(store.category);
       const imageSrc = storeImage
         ? `/images/markers/${store.category}.png`
         : "/images/markers/bread.png";
     const markerPosition: google.maps.LatLngLiteral = { 
-    lat: Number(store.x_cnts), 
-    lng: Number(store.y_dnts)  
+    lat: Number(store.lat), 
+    lng: Number(store.lng)  
   };
       // const markerPosition = { lat: store.lat, lng: store.lng };
 
