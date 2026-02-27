@@ -25,7 +25,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 .navbar {
-  @apply flex justify-between items-center fixed w-full cursor-pointer h-[52px] top-0 shadow-sm bg-white;
+  @apply flex z-[100] justify-between items-center fixed w-full cursor-pointer h-[52px] top-0 shadow-sm bg-white;
 }
 
 .navbar__logo {
