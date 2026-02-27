@@ -3,8 +3,8 @@ export interface StoreType {
   title: string | null;
   state: string | null;
   city: string | null;
-  lat: number | null; 
-  lng: number | null; 
+  lat: string | null; 
+  lng: string | null; 
   address: string | null;
   phone?: string | null; 
   web?: string | null;

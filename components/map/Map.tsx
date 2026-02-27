@@ -12,21 +12,31 @@ declare global {
 
 const DEFAULT_LAT = -33.8708464;
 const DEFAULT_LNG = 151.20733;
+const DEFAULT_ZOOM = 15
 
 interface MapProps {
   setMap: Dispatch <SetStateAction<google.maps.Map | null>>;
+  lat?: string | null;
+  lng?: string | null;
+  zoom?: number;
 }
 
-export default function GoogleMap({setMap} : MapProps) {
+export default function GoogleMap({ setMap, lat, lng, zoom }: MapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const initGoogleMap = () => {
     if (mapRef.current && window.google) {
+      const centerLat = lat ? parseFloat(lat) : DEFAULT_LAT;
+      const centerLng = lng ? parseFloat(lng) : DEFAULT_LNG;
+
       const map = new window.google.maps.Map(mapRef.current,{
         // Sydney CBD 
-        center: { lat: DEFAULT_LAT, lng: DEFAULT_LNG }, 
-        zoom: 15,
+        center: { 
+          lat: centerLat, 
+          lng: centerLng }, 
+        zoom: zoom ?? DEFAULT_ZOOM,
         mapId: "DEMO_MAP_ID",
       });
+
       setMap(map);
     }
   };
