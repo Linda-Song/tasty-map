@@ -16,3 +16,15 @@ export interface StoreResponse{
   totalPages: number;
   totalCount: number;
 }
+
+export interface LocationType {
+  lat: number;
+  lng: number;
+  zoom: number;
+
+}
+
+export interface SearchType {
+  q?: string;
+  category?:string;
+}

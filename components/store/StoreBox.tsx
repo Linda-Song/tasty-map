@@ -1,6 +1,8 @@
 'use client'
-import { Dispatch, SetStateAction } from "react"
+
 import Image from "next/image";
+import { useRecoilState } from "recoil";
+import { currentStoreState } from "@/atoms/mapState";
 import { StoreType } from "@/type";
 import { AiOutlineClose, AiOutlineInfoCircle } from "react-icons/ai";
 import { HiOutlineMapPin, HiOutlinePhone } from "react-icons/hi2";
@@ -8,14 +10,13 @@ import { GiCroissant } from "react-icons/gi";
 import { useRouter } from 'next/navigation';
 
 
-
-interface StoreBoxProps {
-    store: StoreType | null;
-    setStore: Dispatch<SetStateAction<StoreType | null>>;
-}
 const MENU_CATEGORIES = ['croissant','cake','donut','sourdough','macaron','muffin','lamington','pie','tart'];
 
-export default function StoreBox({store, setStore}: StoreBoxProps) {
+export default function StoreBox() {
+
+    const router = useRouter();
+    const [store, setStore] = useRecoilState(currentStoreState);
+    
     if(!store) return null;
 
     const storeImage = store.category && MENU_CATEGORIES.includes(store.category);
@@ -23,8 +24,6 @@ export default function StoreBox({store, setStore}: StoreBoxProps) {
         ? `/images/markers/${store.category}.png`
         : "/images/markers/default.png";
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const router = useRouter();
 
     return(
         <div className="fixed transition ease-in-out delay-150 inset-x-0 mx-auto bottom-20 rounded-lg shadow-lg max-w-sm z-10 w-full bg-white">

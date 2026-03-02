@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prismadb"; // 아까 만든 Prisma 인스턴스
+import prisma  from "@/lib/prismadb"; // 아까 만든 Prisma 인스턴스
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     
     const id = searchParams.get("id");
     const page = searchParams.get("page");
+    const q = searchParams.get("q") || ""; 
+    const category = searchParams.get("category") || "";
     const take = 10; // 한 페이지에 가져올 개수
 
     try {
@@ -27,29 +29,52 @@ export async function GET(request: Request) {
             const pageNum = parseInt(page, 10);
             const skip = (pageNum - 1) * take;
 
+            const whereCondition = {
+                AND:[
+                    q?{
+                        OR: [
+                            { title: { contains: q, mode: 'insensitive' as const } },
+                        ]
+                    } : {},
+                    category ? {category: {equals: category}} : {},
+                ]
+            };
+
             // 1. DB에서 전체 개수 가져오기
-            const totalCount = await prisma.store.count();
+            // const totalCount = await prisma.store.count();
             
-            // 2. DB에서 해당 페이지 데이터만 가져오기
-            const stores = await prisma.store.findMany({
+            // // 2. DB에서 해당 페이지 데이터만 가져오기
+            // const stores = await prisma.store.findMany({
+            //     skip: skip,
+            //     take: take,
+            //     orderBy: { id: 'asc' } // 정렬 기준 추가 가능
+            // });
+            const [stores, totalCount] = await Promise.all([
+            prisma.store.findMany({
+                where: whereCondition,
                 skip: skip,
                 take: take,
-                orderBy: { id: 'asc' } // 정렬 기준 추가 가능
-            });
+                orderBy: { id: 'asc' }
+            }),
+            prisma.store.count({
+                where: whereCondition
+            })
+        ]);
 
             return NextResponse.json({
                 data: stores,
                 totalPages: Math.ceil(totalCount / take),
-                page: pageNum
+                page: pageNum,
+                totalCount: totalCount
             });
         }
 
         // 페이지 인자가 없을 경우 전체 데이터 반환 (데이터가 많으면 주의!)
-        const allStores = await prisma.store.findMany();
-        return NextResponse.json({
-            data: allStores,
-            totalPages: 1
-        });
+        // const allStores = await prisma.store.findMany();
+        // return NextResponse.json({
+        //     data: allStores,
+        //     totalPages: 1
+        // });
         
     } catch (error) {
         console.error(error);

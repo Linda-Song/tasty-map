@@ -1,4 +1,10 @@
-export { default } from "next-auth/middleware"
+import { withAuth } from "next-auth/middleware";
+
+export default withAuth({
+  pages: {
+    signIn: "/api/auth/signin", // 로그인 페이지 경로
+  },
+});
 
 export const config = { 
   matcher: [
@@ -7,4 +13,4 @@ export const config = {
     "/stores/:id/edit",
     "/users/likes/:path*",
   ] 
-}
+};
