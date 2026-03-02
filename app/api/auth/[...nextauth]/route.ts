@@ -1,11 +1,16 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
-import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "@/lib/prismadb"
 import AzureADProvider from "next-auth/providers/azure-ad";
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import prisma from "@/lib/prismadb"
 
 
 const handler = NextAuth({
+  session: {
+    strategy: "jwt" as const,
+    maxAge: 60 * 60 * 24,
+    updateAge: 60 * 60 * 2,
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -20,9 +25,6 @@ const handler = NextAuth({
   ],
   pages: {
     signIn: "/users/login",
-  },
-  session: {
-    strategy: "jwt", 
   },
   secret: process.env.NEXTAUTH_SECRET,
 })

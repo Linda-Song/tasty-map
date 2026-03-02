@@ -1,8 +1,9 @@
 'use client';
 
 import Script from "next/script";
-import { Dispatch, SetStateAction, useRef } from "react";
-
+import { useRef } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { mapState, locationState } from "@/atoms/mapState";
 
 declare global {
   interface Window {
@@ -10,30 +11,19 @@ declare global {
   }
 }
 
-const DEFAULT_LAT = -33.8708464;
-const DEFAULT_LNG = 151.20733;
-const DEFAULT_ZOOM = 15
-
-interface MapProps {
-  setMap: Dispatch <SetStateAction<google.maps.Map | null>>;
-  lat?: string | null;
-  lng?: string | null;
-  zoom?: number;
-}
-
-export default function GoogleMap({ setMap, lat, lng, zoom }: MapProps) {
+export default function GoogleMap() {
   const mapRef = useRef<HTMLDivElement>(null);
+  const setMap = useSetRecoilState(mapState);
+  const location = useRecoilValue(locationState); // 이제 숫자로 들어옵니다.
+  
   const initGoogleMap = () => {
     if (mapRef.current && window.google) {
-      const centerLat = lat ? parseFloat(lat) : DEFAULT_LAT;
-      const centerLng = lng ? parseFloat(lng) : DEFAULT_LNG;
-
-      const map = new window.google.maps.Map(mapRef.current,{
-        // Sydney CBD 
+      const map = new window.google.maps.Map(mapRef.current, {
         center: { 
-          lat: centerLat, 
-          lng: centerLng }, 
-        zoom: zoom ?? DEFAULT_ZOOM,
+          lat: location.lat, 
+          lng: location.lng, 
+        },
+        zoom: location.zoom,
         mapId: "DEMO_MAP_ID",
       });
 
@@ -45,11 +35,10 @@ export default function GoogleMap({ setMap, lat, lng, zoom }: MapProps) {
     <>
       <Script
         strategy="afterInteractive"
-        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_CLIENT}&callback=console.debug&libraries=maps,marker&v=beta`}
+        src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_CLIENT}&libraries=maps,marker&v=beta`}
         onReady={initGoogleMap}
       />
       <div ref={mapRef} className="w-full h-screen" />
     </>
   );
 }
-
