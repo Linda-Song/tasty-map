@@ -67,6 +67,7 @@ export async function GET(req: Request) {
         userId: Number(session.user.id),
       },
     });
+    
     const likes = await prisma.like.findMany({
       where:{
         userId: Number(session.user.id),
