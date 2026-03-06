@@ -17,6 +17,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  likes         Like[]
 }
 
 // 2. 소셜 로그인 정보 저장용 (NextAuth 필수)
@@ -54,10 +55,22 @@ model Store {
   title    String?
   phone    String?
   state    String?
-  city     String
+  city     String?
   address  String?
   lat      String?
   lng      String?
   category String?
   web      String?
+  likes    Like[]
+}
+
+// Like model
+model Like {
+  id        Int     @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  storeId   Int
+  userId    Int
+  store     Store      @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@index([userId, storeId])
 }

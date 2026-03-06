@@ -9,7 +9,17 @@ export interface StoreType {
   phone?: string | null; 
   web?: string | null;
   category: string| null;
+  likes?: Partial<LikeInterface>[];
 }
+
+  export interface LikeInterface {
+    id: number;
+    storeId: number;
+    userId: number;
+    store:  StoreType;
+    createdAt: string;
+  }
+
 
 export interface StoreResponse{
   data: StoreType[];

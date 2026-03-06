@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { currentStoreState } from "@/atoms/mapState";
-import { StoreType } from "@/type";
 import { AiOutlineClose, AiOutlineInfoCircle } from "react-icons/ai";
 import { HiOutlineMapPin, HiOutlinePhone } from "react-icons/hi2";
 import { GiCroissant } from "react-icons/gi";
 import { useRouter } from 'next/navigation';
+import Like from "../like/Like";
 
 
 const MENU_CATEGORIES = ['croissant','cake','donut','sourdough','macaron','muffin','lamington','pie','tart'];
@@ -50,10 +50,13 @@ export default function StoreBox() {
                 
                 {/* 정보 간격 최적화 */}
                 <div className="mt-4 flex flex-col gap-2">
-                    <div className="flex gap-2 items-center text-sm">
-                        <HiOutlineMapPin className="text-gray-400"/>
-                        <span className="truncate">{store?.address || "none"}</span>
+                <div className="flex justify-between items-center gap-2">
+                    <div className="flex gap-2 items-center text-sm truncate">
+                      <HiOutlineMapPin className="text-gray-400 " />
+                      <span className="truncate">{store?.address || "none"}</span>
                     </div>
+                    {store?.id && <Like storeId={store.id} />}
+                </div>
                     
                     <div className="flex gap-2 items-center text-sm">
                         <HiOutlinePhone className="text-gray-400"/>
