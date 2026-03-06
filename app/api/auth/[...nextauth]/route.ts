@@ -1,11 +1,11 @@
-import NextAuth from "next-auth"
+import NextAuth, {NextAuthOptions} from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import AzureADProvider from "next-auth/providers/azure-ad";
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import prisma from "@/lib/prismadb"
 
 
-const handler = NextAuth({
+export const authOptions:NextAuthOptions = {
   session: {
     strategy: "jwt" as const,
     maxAge: 60 * 60 * 24,
@@ -26,7 +26,24 @@ const handler = NextAuth({
   pages: {
     signIn: "/users/login",
   },
+  callbacks:{
+    jwt: async ({user, token}) => {
+      if(user) {
+        token.sub = user.id;
+      }
+      return token;
+    },
+    session:({session, token}) => ({
+      ...session,
+      user:{
+        ...session.user,
+        id:token.sub,
+      },
+    }),
+  },
   secret: process.env.NEXTAUTH_SECRET,
-})
+}
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST }
