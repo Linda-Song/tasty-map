@@ -84,7 +84,7 @@ body {
 
 @media (width <= 640px) {
   .navbar--mobile {
-    @apply fixed  w-full text-white top-[52px] bg-blue-800
+    @apply fixed  w-full text-white top-[52px] bg-blue-800 z-[100]
   }
   .navbar__button {
     @apply block py-0 px-[18px] cursor-pointer
@@ -99,7 +99,7 @@ body {
     @apply cursor-pointer 
   }
   .navbar__list--mobile-item:hover {
-    @apply text-gray-200;
+    @apply hover:text-red-600
   }
 
 }
