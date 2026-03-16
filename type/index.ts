@@ -10,6 +10,7 @@ export interface StoreType {
   web?: string | null;
   category: string| null;
   likes?: Partial<LikeInterface>[];
+  comments?: CommentInterface[];
 }
 
   export interface LikeInterface {
@@ -20,11 +21,27 @@ export interface StoreType {
     createdAt: string;
   }
 
+  export interface CommentInterface {
+    id: number;
+    storeId: number;
+    userId: number;
+    store:  StoreType;
+    createdAt: string;
+    user?: UserType;
+    store?: StoreType;
+  }
+
 
 export interface StoreResponse{
   data: StoreType[];
   totalPages: number;
   totalCount: number;
+}
+export interface UserType {
+  id: number;
+  email?: string | null;
+  name?: string | null;
+  image?: string | null;
 }
 
 export interface LocationType {

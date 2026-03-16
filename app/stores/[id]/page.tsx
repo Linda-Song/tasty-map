@@ -11,6 +11,7 @@ import Marker from "@/components/markers/Marker";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import Like from "@/components/like/Like";
+import Comments from "@/components/comments";
 
 export default function StoreDetailPage() {
   const {data: session, status} = useSession();
@@ -120,14 +121,16 @@ export default function StoreDetailPage() {
             )}
           </div>
           {isSuccess && (
+            <>
             <div className="overflow-hidden w-full mb-20 max-w-5xl mx-auto max-h-150">
               <Map setMap={setMap} lat={store.lat} lng={store?.lng} zoom={16} />
               <Marker map={map} store={store}/>
             </div>
+            <Comments storeId={store.id}/>
+            </>  
           )}
-
-         
-        </div>
+        </div>   
+          
       )}
     </div>
   );
