@@ -25,18 +25,11 @@ export interface StoreType {
     id: number;
     storeId: number;
     userId: number;
-    store:  StoreType;
+    body: string;
     createdAt: string;
     user?: UserType;
     store?: StoreType;
   }
-
-
-export interface StoreResponse{
-  data: StoreType[];
-  totalPages: number;
-  totalCount: number;
-}
 export interface UserType {
   id: number;
   email?: string | null;
@@ -55,3 +48,17 @@ export interface SearchType {
   q?: string;
   category?:string;
 }
+
+export interface StoreResponse{
+  data: StoreType[];
+  totalPages: number;
+  totalCount: number;
+}
+
+export interface CommentResponse {
+  data: CommentInterface[];
+  totalPages: number;
+  totalCount: number;
+  page: number;
+}
+
