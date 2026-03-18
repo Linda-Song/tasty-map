@@ -2,6 +2,8 @@
 
 import dynamic from 'next/dynamic'; // 1. dynamic 추가
 import { StoreResponse } from "@/type/index";
+import CurrentLocationBtn from '../common/CurrentLocationBtn';
+import { useState } from 'react';
 
 
 // 2. GoogleMap을 dynamic import로 불러오고 ssr을 false로 설정합니다.
@@ -23,13 +25,14 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ stores }: HomeClientProps) {
+  const [map, setMap] = useState<google.maps.Map | null>(null);
   return (
     <>
       <main> 
-        {/* 이제 GoogleMap은 브라우저에서만 렌더링됩니다. */}
-        <GoogleMap /> 
-        <Markers stores={stores} />
+        <GoogleMap onMapLoad={setMap} /> 
+        <Markers stores={stores} map={map} />
         <StoreBox />
+        <CurrentLocationBtn map={map}/>
       </main>
     </>
   );

@@ -15,7 +15,7 @@ export default function RootLayout({children,}: Readonly<{
         <RecoilRootProvider>
           <ReactQueryProvider>
             <Navbar/>
-            <ToastContainer/>
+            <ToastContainer autoClose={1000} pauseOnFocusLoss={false}/>
             {children}
           </ReactQueryProvider>
         </RecoilRootProvider>

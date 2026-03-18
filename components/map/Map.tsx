@@ -11,7 +11,11 @@ declare global {
   }
 }
 
-export default function GoogleMap() {
+interface GoogleMapProps {
+  onMapLoad?: (map: google.maps.Map) => void;
+}
+
+export default function GoogleMap({onMapLoad}: GoogleMapProps) {
   const mapRef = useRef<HTMLDivElement>(null);
   const setMap = useSetRecoilState(mapState);
   const location = useRecoilValue(locationState); // 이제 숫자로 들어옵니다.
@@ -28,6 +32,9 @@ export default function GoogleMap() {
       });
 
       setMap(map);
+      if(onMapLoad) {
+        onMapLoad(map);
+      }
     }
   };
 
