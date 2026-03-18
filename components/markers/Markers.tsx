@@ -8,13 +8,13 @@ import { mapState, currentStoreState } from "@/atoms/mapState";
 // 1. Props에서 map과 setCurrentStore를 제거했습니다. (Recoil에서 가져옴)
 interface MarkersProps {
   stores: StoreResponse;
+  map: google.maps.Map | null;
 }
 
 const MENU_CATEGORIES = ['croissant','cake','donut','sourdough','macaron','muffin','lamington','pie','tart'];
 
-export default function Markers({ stores }: MarkersProps) {
+export default function Markers({ stores, map }: MarkersProps) {
   // 2. Recoil 상태 구독
-  const map = useRecoilValue(mapState); 
   const setCurrentStore = useSetRecoilState(currentStoreState);
 
 
